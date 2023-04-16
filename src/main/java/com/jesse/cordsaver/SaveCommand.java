@@ -24,7 +24,7 @@ public class SaveCommand implements CommandExecutor {
             }
             String cordName = builder.toString();
 
-            //save the executor cords along with the name of the cords (args[0]) and the dimension to a yml file
+            //save the executors cords, the name of the cords (args[0]) and the dimension to a yml file
             int cordCount = YmlFileManager.getCordCount(player);
             cordCount++;
             YmlFileManager.setCordCount(player, cordCount);

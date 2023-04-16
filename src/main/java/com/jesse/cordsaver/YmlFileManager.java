@@ -13,7 +13,6 @@ public class YmlFileManager {
     private final static File cordsFile = Main.getCordsFile();
 
     public static void startFileManager(File file){
-        // Creates the YamlConfiguration
         modifyFile = YamlConfiguration.loadConfiguration(file);
     }
 

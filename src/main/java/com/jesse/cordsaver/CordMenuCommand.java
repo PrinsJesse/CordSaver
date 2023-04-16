@@ -10,10 +10,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class CordMenuCommand implements CommandExecutor {
+    public static List<ItemStack> cordItemstacks = new ArrayList<>();
+
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
 
@@ -61,6 +65,9 @@ public class CordMenuCommand implements CommandExecutor {
 
                     inv.setItem(slotList[cordNumber - 1], cordDisplay);
                 }
+
+                // Add the itemstack to the itemstack list
+                cordItemstacks.add(cordDisplay);
             }
 
             player.openInventory(inv);

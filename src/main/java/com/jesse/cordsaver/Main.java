@@ -1,7 +1,9 @@
 package com.jesse.cordsaver;
 
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerCommandSendEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -15,6 +17,7 @@ public final class Main extends JavaPlugin implements Listener {
         getCommand("save").setExecutor(new SaveCommand());
         getCommand("cordsmenu").setExecutor(new CordMenuCommand());
         Bukkit.getPluginManager().registerEvents(new CordMenuListener(), this);
+        Bukkit.getPluginManager().registerEvents(this, this);
 
         file = new File(getDataFolder(), "cords.yml");
         if (!file.exists()) {
@@ -30,5 +33,10 @@ public final class Main extends JavaPlugin implements Listener {
 
     public static File getCordsFile(){
         return file;
+    }
+
+    @EventHandler
+    public void onCommandSend(PlayerCommandSendEvent e) {
+        e.getCommands().removeIf(command -> command.contains(":"));
     }
 }

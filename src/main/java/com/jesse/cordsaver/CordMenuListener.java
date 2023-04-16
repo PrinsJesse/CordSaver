@@ -21,8 +21,8 @@ public class CordMenuListener implements Listener {
             e.setCancelled(true);
 
             Player player = (Player) e.getWhoClicked();
-            Material currentItem = e.getCurrentItem().getType();
-            if (currentItem != Material.AIR && currentItem != Material.LIME_STAINED_GLASS_PANE){
+            ItemStack currentItem = e.getCurrentItem();
+            if (CordMenuCommand.cordItemstacks.contains(currentItem)){
                 clickedSlot = e.getRawSlot();
                 ActionMenu(player);
             }
@@ -35,7 +35,7 @@ public class CordMenuListener implements Listener {
                     new int[]{0,0,0,0,0,0,0,0,0,0,1,2,3,4,5,6,7,0,0,8,9,10,11,12,13,14,0,0,15,16,17,18,19,20,21,0,0,22,23,24,25,26,27,28};
             int clickedCord = translateClickedSlotToCord[clickedSlot];
 
-            switch(clickedSlot){
+            switch(e.getRawSlot()){
                 case 20:
                     deleteCord(player, clickedCord);
                     break;
@@ -47,7 +47,6 @@ public class CordMenuListener implements Listener {
     }
 
     private void ActionMenu(Player player){
-        // 20 en 24
         Inventory inv = Bukkit.createInventory(player, 45, ChatColor.RED + "Action menu");
 
         ItemStack border = new ItemStack(Material.LIME_STAINED_GLASS_PANE); // Border
