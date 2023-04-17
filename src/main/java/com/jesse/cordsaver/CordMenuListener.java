@@ -24,6 +24,7 @@ public class CordMenuListener implements Listener {
             ItemStack currentItem = e.getCurrentItem();
             if (CordMenuCommand.cordItemstacks.contains(currentItem)){
                 clickedSlot = e.getRawSlot();
+                CordMenuCommand.cordItemstacks.clear();
                 ActionMenu(player);
             }
         }
