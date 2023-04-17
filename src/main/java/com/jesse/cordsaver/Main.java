@@ -11,28 +11,33 @@ import java.io.IOException;
 
 public final class Main extends JavaPlugin implements Listener {
 
-    static File file;
+    static File cordsFile;
     @Override
     public void onEnable() {
         getCommand("save").setExecutor(new SaveCommand());
+        getCommand("save").setTabCompleter(new saveTabCompleter());
         getCommand("cordsmenu").setExecutor(new CordMenuCommand());
         Bukkit.getPluginManager().registerEvents(new CordMenuListener(), this);
         Bukkit.getPluginManager().registerEvents(this, this);
 
-        file = new File(getDataFolder(), "cords.yml");
-        if (!file.exists()) {
+        if (!getDataFolder().exists()){
+            getDataFolder().mkdir();
+        }
+
+        cordsFile = new File(getDataFolder(), "cords.yml");
+        if (!cordsFile.exists()) {
             try {
-                file.createNewFile();
+                cordsFile.createNewFile();
             } catch (IOException e) {
                 System.out.println("Can't load file!");
             }
         }
 
-        YmlFileManager.startFileManager(file);
+        YmlFileManager.startFileManager(cordsFile);
     }
 
     public static File getCordsFile(){
-        return file;
+        return cordsFile;
     }
 
     @EventHandler
