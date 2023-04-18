@@ -1,9 +1,6 @@
 package com.jesse.cordsaver;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,35 +10,56 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class CordMenuListener implements Listener {
-    int clickedSlot = 0;
+    ItemStack clickedCord;
 
     @EventHandler
     public void onClick(InventoryClickEvent e){
         if (ChatColor.translateAlternateColorCodes('&', e.getView().getTitle()).equals(ChatColor.RED + "Cords menu") && e.getCurrentItem() != null){
             e.setCancelled(true);
-
+            int clickedSlot = e.getRawSlot();
+            World.Environment dimension;
             Player player = (Player) e.getWhoClicked();
-            ItemStack currentItem = e.getCurrentItem();
-            if (CordMenuCommand.cordItemstacks.contains(currentItem)){
-                clickedSlot = e.getRawSlot();
-                CordMenuCommand.cordItemstacks.clear();
+            int cordCount = YmlFileManager.getCordCount(player);
+            GUI cordsGUI;
+
+            clickedCord = e.getCurrentItem();
+            if (Main.cordDictionary.containsKey(clickedCord)){
                 ActionMenu(player);
+            }
+
+            switch(clickedSlot){
+                case 3:
+                    dimension = World.Environment.NORMAL;
+                    cordsGUI = new GUI(player, dimension, cordCount);
+                    cordsGUI.openGUI(cordsGUI.createGUI());
+                    break;
+                case 4:
+                    dimension = World.Environment.NETHER;
+                    cordsGUI = new GUI(player, dimension, cordCount);
+                    cordsGUI.openGUI(cordsGUI.createGUI());
+                    break;
+                case 5:
+                    dimension = World.Environment.THE_END;
+                    cordsGUI = new GUI(player, dimension, cordCount);
+                    cordsGUI.openGUI(cordsGUI.createGUI());
+                    break;
             }
         }
 
         if (ChatColor.translateAlternateColorCodes('&', e.getView().getTitle()).equals(ChatColor.RED + "Action menu") && e.getCurrentItem() != null){
             Player player = (Player) e.getWhoClicked();
             e.setCancelled(true);
-            int[] translateClickedSlotToCord =
-                    new int[]{0,0,0,0,0,0,0,0,0,0,1,2,3,4,5,6,7,0,0,8,9,10,11,12,13,14,0,0,15,16,17,18,19,20,21,0,0,22,23,24,25,26,27,28};
-            int clickedCord = translateClickedSlotToCord[clickedSlot];
+
+            int clickedCordNumber = Main.cordDictionary.get(clickedCord);
 
             switch(e.getRawSlot()){
                 case 20:
-                    deleteCord(player, clickedCord);
+                    deleteCord(player, clickedCordNumber);
+                    Main.cordDictionary.clear();
                     break;
                 case 24:
-                    broadCastCord(player, clickedCord);
+                    broadCastCord(player, clickedCordNumber);
+                    Main.cordDictionary.clear();
                     break;
             }
         }
