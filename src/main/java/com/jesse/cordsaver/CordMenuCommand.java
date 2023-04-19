@@ -18,8 +18,9 @@ public class CordMenuCommand implements CommandExecutor {
             int cordCount = YmlFileManager.getCordCount(player);
             World.Environment dimension = World.Environment.NORMAL;
 
+            // Creates and opens the coordinate GUI
             GUI cordsGUI = new GUI(player, dimension, cordCount);
-            cordsGUI.openGUI(cordsGUI.createGUI());
+            player.openInventory(cordsGUI.createGUI());
         }
         return false;
     }

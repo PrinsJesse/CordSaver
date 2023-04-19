@@ -13,7 +13,7 @@ public class SaveCommand implements CommandExecutor {
         // /save Name_for_cords
 
         if (commandSender instanceof Player && args.length > 0){
-            // Gets player instance and the location of the player
+            // Getting the needed variables
             Player player = (Player) commandSender;
             Location playerLocation = player.getLocation();
 
@@ -24,7 +24,7 @@ public class SaveCommand implements CommandExecutor {
             }
             String cordName = builder.toString();
 
-            //save the executors cords, the name of the cords (args[0]) and the dimension to a yml file
+            //save the executors cords, the name of the cords and the dimension to a yml file
             int cordCount = YmlFileManager.getCordCount(player) + 1;
             YmlFileManager.setCordCount(player, cordCount);
             YmlFileManager.setCordName(player, cordCount, cordName);

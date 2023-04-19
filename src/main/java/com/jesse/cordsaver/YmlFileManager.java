@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class YmlFileManager {
+    // Manager to set/get all the different fields in the yml file
     private static YamlConfiguration modifyFile;
     private final static File cordsFile = Main.getCordsFile();
 

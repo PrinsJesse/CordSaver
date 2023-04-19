@@ -21,69 +21,64 @@ public class GUI {
 
     public Inventory createGUI(){
         Inventory cordsGUI = Bukkit.createInventory(player, 54, ChatColor.RED + "Cords menu");
+
+        // Putting the border in the GUI
         ItemStack border = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
         for (int i : new int[]{0,1,2,6,7,8,9,17,18,26,27,35,36,44,45,46,47,48,49,50,51,52,53}){
             cordsGUI.setItem(i, border);
         }
 
-        // Set the dimension selectors
-        ItemStack overworldSelector = new ItemStack(Material.GRASS_BLOCK);
-        ItemStack netherSelector = new ItemStack(Material.NETHERRACK);
-        ItemStack endSelector = new ItemStack(Material.END_STONE);
-        ItemMeta overworldSelectorMeta = overworldSelector.getItemMeta();
-        ItemMeta netherSelectorMeta = netherSelector.getItemMeta();
-        ItemMeta endSelectorMeta = endSelector.getItemMeta();
-        overworldSelectorMeta.setDisplayName("Your overworld coordinates");
-        netherSelectorMeta.setDisplayName("Your nether coordinates");
-        endSelectorMeta.setDisplayName("Your end coordinates");
-        overworldSelector.setItemMeta(overworldSelectorMeta);
-        netherSelector.setItemMeta(netherSelectorMeta);
-        endSelector.setItemMeta(endSelectorMeta);
-        cordsGUI.setItem(3, overworldSelector);
-        cordsGUI.setItem(4, netherSelector);
-        cordsGUI.setItem(5, endSelector);
+        // Putting the dimension selectors in the GUI
+        cordsGUI.setItem(3, createGuiItem(Material.GRASS_BLOCK, "Your overworld coordinates", null));
+        cordsGUI.setItem(4, createGuiItem(Material.NETHERRACK, "Your nether coordinates", null));
+        cordsGUI.setItem(5, createGuiItem(Material.END_STONE, "Your end coordinates", null));
 
-        int slotNumber = 0;
-        for (int cordNumber = 1; cordNumber <= cordCount; cordNumber++){
-            ItemStack cordDisplay = null;
+        for (int cordNumber = 1, slotNumber = 0; cordNumber <= cordCount; cordNumber++){
+            // Getting all the needed variables
+            ItemStack cordDisplayItem = null;
             String cordName = YmlFileManager.getCordName(player, cordNumber);
             Location cordLocation = YmlFileManager.getCordLocation(player, cordNumber);
-            World.Environment cordDimension = cordLocation.getWorld().getEnvironment();
             int[] cordXYZ = YmlFileManager.getLocationXYZ(cordLocation);
-            int[] slotList = new int[]{10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34,37,38,39,40,41,42,43};
+            String cordLore = ChatColor.AQUA + "x: " + cordXYZ[0] + " y: " + cordXYZ[1] + " z: " + cordXYZ[2];
+            World.Environment cordDimension = cordLocation.getWorld().getEnvironment();
+            int[] slotList = new int[]{10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34,37,38,39,40,41,42,43}; // List of slots where I can put a cord
 
+            // Checks if the dimension of the coordinate is the same as the dimension tab the player clicked on
             if (cordDimension == clickedDimension){
 
+                // Creates the coordinate display item depending on the dimension the coordinate was saved in
                 switch(clickedDimension){
                     case NORMAL:
-                        cordDisplay = new ItemStack(Material.GRASS_BLOCK);
+                        cordDisplayItem = createGuiItem(Material.GRASS_BLOCK, cordName, cordLore);
+                        cordsGUI.setItem(slotList[slotNumber], cordDisplayItem);
+                        slotNumber++;
                         break;
                     case NETHER:
-                        cordDisplay = new ItemStack(Material.NETHERRACK);
+                        cordDisplayItem = createGuiItem(Material.NETHERRACK, cordName, cordLore);
+                        cordsGUI.setItem(slotList[slotNumber], cordDisplayItem);
+                        slotNumber++;
                         break;
                     case THE_END:
-                        cordDisplay = new ItemStack(Material.END_STONE);
+                        cordDisplayItem = createGuiItem(Material.END_STONE, cordName, cordLore);
+                        cordsGUI.setItem(slotList[slotNumber], cordDisplayItem);
+                        slotNumber++;
                         break;
                 }
-
-                if (cordDisplay != null){
-                    ItemMeta cordDisplayMeta = cordDisplay.getItemMeta();
-                    cordDisplayMeta.setDisplayName(cordName);
-                    cordDisplayMeta.setLore(Arrays.asList(ChatColor.AQUA + "x: " + cordXYZ[0] + " y: " + cordXYZ[1] + " z: " + cordXYZ[2]));
-                    cordDisplay.setItemMeta(cordDisplayMeta);
-
-                    cordsGUI.setItem(slotList[slotNumber], cordDisplay);
-                    slotNumber++;
-                }
-
-                Main.cordDictionary.put(cordDisplay, cordNumber);
+                Main.cordDictionary.put(cordDisplayItem, cordNumber);
             }
         }
-
         return cordsGUI;
     }
 
-    public void openGUI(Inventory cordsGUI){
-        player.openInventory(cordsGUI);
+    private ItemStack createGuiItem(Material item, String displayName, String lore){
+        // Creates an item taking a material, displayname and lore (lore null for no lore)
+        ItemStack guiItem = new ItemStack(item);
+        ItemMeta guiItemMeta = guiItem.getItemMeta();
+        guiItemMeta.setDisplayName(displayName);
+        if (lore != null){
+            guiItemMeta.setLore(Arrays.asList(lore));
+        }
+        guiItem.setItemMeta(guiItemMeta);
+        return guiItem;
     }
 }

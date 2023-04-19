@@ -9,9 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public final class Main extends JavaPlugin implements Listener {
 
@@ -42,11 +40,13 @@ public final class Main extends JavaPlugin implements Listener {
     }
 
     public static File getCordsFile(){
+        // This methode is needed for the YmlFileManager
         return cordsFile;
     }
 
     @EventHandler
     public void onCommandSend(PlayerCommandSendEvent e) {
+        // Removes all the plugin:command commands from the chat
         e.getCommands().removeIf(command -> command.contains(":"));
     }
 }
