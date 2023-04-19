@@ -10,7 +10,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class CordMenuListener implements Listener {
-    ItemStack clickedCord;
+    private ItemStack clickedCord;
+    private Main main;
+
+    public CordMenuListener(Main main){
+        this.main = main;
+    }
 
     @EventHandler
     public void onClick(InventoryClickEvent e){
@@ -66,7 +71,7 @@ public class CordMenuListener implements Listener {
                     Main.cordDictionary.clear(); // Needs to be cleared here otherwise this dictionary will keep growing (memory leak)
                     break;
                 case 24:
-                    broadCastCord(player, clickedCordNumber);
+                    broadcastCord(player, clickedCordNumber);
                     Main.cordDictionary.clear(); // Needs to be cleared here otherwise this dictionary will keep growing (memory leak)
                     break;
             }
@@ -112,21 +117,28 @@ public class CordMenuListener implements Listener {
 
             // Puts the copied information one coordinate higher
             YmlFileManager.setCordName(player, cordToPaste, tmpName);
-            YmlFileManager.setCordLocation(player, cordToPaste, tmpLocation);
+            YmlFileManager.setCordLocation(player, cordToPaste, tmpLocation, null);
             cordToPaste++;
         }
 
-        YmlFileManager.deleteCordPath(player, cordCount);
+        YmlFileManager.deleteCordPath(player, cordCount, ChatColor.RED + "The coordinate has been deleted");
         cordCount--;
         YmlFileManager.setCordCount(player, cordCount);
         player.closeInventory();
     }
 
-    private void broadCastCord(Player player, int clickedCord){
+    private void broadcastCord(Player player, int clickedCord){
+        boolean broadcastToggle = main.getConfig().getBoolean("BroadcastToServer");
         String cordName = YmlFileManager.getCordName(player, clickedCord);
         Location cordLocation = YmlFileManager.getCordLocation(player, clickedCord);
         int[] cordXYZ = YmlFileManager.getLocationXYZ(cordLocation);
-        Bukkit.broadcastMessage(ChatColor.GREEN + cordName + "is at" + " x: "+ cordXYZ[0] + " y: " + cordXYZ[1] + " z: " + cordXYZ[2]);
-        player.closeInventory();
+
+        if (broadcastToggle == true){
+            Bukkit.broadcastMessage(ChatColor.GREEN + cordName + "is at" + " x: "+ cordXYZ[0] + " y: " + cordXYZ[1] + " z: " + cordXYZ[2]);
+            player.closeInventory();
+        } else {
+            player.sendMessage(ChatColor.GREEN + cordName + "is at" + " x: "+ cordXYZ[0] + " y: " + cordXYZ[1] + " z: " + cordXYZ[2]);
+            player.closeInventory();
+        }
     }
 }

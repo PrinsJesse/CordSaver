@@ -1,5 +1,6 @@
 package com.jesse.cordsaver;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,7 +29,7 @@ public class SaveCommand implements CommandExecutor {
             int cordCount = YmlFileManager.getCordCount(player) + 1;
             YmlFileManager.setCordCount(player, cordCount);
             YmlFileManager.setCordName(player, cordCount, cordName);
-            YmlFileManager.setCordLocation(player, cordCount, playerLocation);
+            YmlFileManager.setCordLocation(player, cordCount, playerLocation, ChatColor.GREEN + "The location has been saved!");
         }
         return false;
     }

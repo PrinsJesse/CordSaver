@@ -17,10 +17,13 @@ public final class Main extends JavaPlugin implements Listener {
     public static HashMap<ItemStack, Integer> cordDictionary = new HashMap<>();
     @Override
     public void onEnable() {
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
+
         getCommand("save").setExecutor(new SaveCommand());
         getCommand("save").setTabCompleter(new saveTabCompleter());
         getCommand("cordsmenu").setExecutor(new CordMenuCommand());
-        Bukkit.getPluginManager().registerEvents(new CordMenuListener(), this);
+        Bukkit.getPluginManager().registerEvents(new CordMenuListener(this), this);
         Bukkit.getPluginManager().registerEvents(this, this);
 
         if (!getDataFolder().exists()){

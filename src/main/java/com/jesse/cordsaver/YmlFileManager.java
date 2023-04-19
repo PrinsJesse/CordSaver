@@ -28,10 +28,10 @@ public class YmlFileManager {
         return modifyFile.getInt(playerName + ".CordCount");
     }
 
-    public static void setCordLocation(Player player, int cordNumber, Location location){
+    public static void setCordLocation(Player player, int cordNumber, Location location, String message){
         String playerName = player.getName();
         modifyFile.set(playerName + ".cord" + cordNumber + ".Location", location);
-        saveFile(cordsFile, ChatColor.GREEN + "The location has been saved!", player);
+        saveFile(cordsFile, message, player);
     }
 
     public static Location getCordLocation(Player player, int cordNumber){
@@ -50,10 +50,10 @@ public class YmlFileManager {
         return modifyFile.getString(playerName + ".cord" + cordNumber + ".name");
     }
 
-    public static void deleteCordPath(Player player, int cordNumber){
+    public static void deleteCordPath(Player player, int cordNumber, String message){
         String playerName = player.getName();
         modifyFile.set(playerName + ".cord" + cordNumber, null);
-        saveFile(cordsFile, ChatColor.RED + "The coordinate has been deleted", player);
+        saveFile(cordsFile, message, player);
     }
 
     public static int[] getLocationXYZ(Location cordLocation){

@@ -1,0 +1,2 @@
+# Turn this toggle off (by replacing true with false) if you don't want to send the message with the coordinates to the whole server but only to the player
+BroadcastToServer: true
