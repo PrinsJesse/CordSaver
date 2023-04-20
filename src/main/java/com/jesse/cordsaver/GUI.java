@@ -20,7 +20,7 @@ public class GUI {
     }
 
     public Inventory createGUI(){
-        Inventory cordsGUI = Bukkit.createInventory(player, 54, ChatColor.RED + "Cords menu");
+        Inventory cordsGUI = Bukkit.createInventory(player, 54, ChatColor.RED + ConfigManager.getCordsMenuName());
 
         // Putting the border in the GUI
         ItemStack border = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
@@ -29,9 +29,9 @@ public class GUI {
         }
 
         // Putting the dimension selectors in the GUI
-        cordsGUI.setItem(3, createGuiItem(Material.GRASS_BLOCK, "Your overworld coordinates", null));
-        cordsGUI.setItem(4, createGuiItem(Material.NETHERRACK, "Your nether coordinates", null));
-        cordsGUI.setItem(5, createGuiItem(Material.END_STONE, "Your end coordinates", null));
+        cordsGUI.setItem(3, createGuiItem(Material.GRASS_BLOCK, ConfigManager.getOverworldSelectorName(), null));
+        cordsGUI.setItem(4, createGuiItem(Material.NETHERRACK, ConfigManager.getNetherSelectorName(), null));
+        cordsGUI.setItem(5, createGuiItem(Material.END_STONE, ConfigManager.getEndSelectorName(), null));
 
         for (int cordNumber = 1, slotNumber = 0; cordNumber <= cordCount; cordNumber++){
             // Getting all the needed variables

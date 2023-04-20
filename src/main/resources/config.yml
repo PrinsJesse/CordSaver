@@ -1,2 +1,19 @@
 # Turn this toggle off (by replacing true with false) if you don't want to send the message with the coordinates to the whole server but only to the player
 BroadcastToServer: true
+
+# You can customize the language below
+# The coordinate menu
+CordsMenuName: 'Coordinate Menu'
+OverworldSelectorName: 'Your overworld coordinates'
+NetherSelectorName: 'Your nether coordinates'
+EndSelectorName: 'Your end coordinates'
+
+# The action menu
+ActionMenuName: 'Action Menu'
+ActionMenuDelete: 'Delete this coordinate'
+ActionMenuPrint: 'Send the coordinates to the chat'
+
+# Messages
+DeleteCoordinateMessage: 'The coordinate has been deleted!'
+SaveCoordinateMessage: 'The location has been saved!'
+PrintCoordinateMessage: 'is at' # These are the words between the name and the xyz coordinates when sending the coordinates to the chat

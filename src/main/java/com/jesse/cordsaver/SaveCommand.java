@@ -29,7 +29,7 @@ public class SaveCommand implements CommandExecutor {
             int cordCount = YmlFileManager.getCordCount(player) + 1;
             YmlFileManager.setCordCount(player, cordCount);
             YmlFileManager.setCordName(player, cordCount, cordName);
-            YmlFileManager.setCordLocation(player, cordCount, playerLocation, ChatColor.GREEN + "The location has been saved!");
+            YmlFileManager.setCordLocation(player, cordCount, playerLocation, ChatColor.GREEN + ConfigManager.getSaveCoordinateMessage());
         }
         return false;
     }

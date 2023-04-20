@@ -11,16 +11,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class CordMenuListener implements Listener {
     private ItemStack clickedCord;
-    private Main main;
-
-    public CordMenuListener(Main main){
-        this.main = main;
-    }
 
     @EventHandler
     public void onClick(InventoryClickEvent e){
         // Checking if the player is in the Cords menu GUI
-        if (ChatColor.translateAlternateColorCodes('&', e.getView().getTitle()).equals(ChatColor.RED + "Cords menu") && e.getCurrentItem() != null){
+        if (ChatColor.translateAlternateColorCodes('&', e.getView().getTitle()).equals(ChatColor.RED + ConfigManager.getCordsMenuName()) && e.getCurrentItem() != null){
             e.setCancelled(true);
 
             // Getting the needed variables
@@ -57,7 +52,7 @@ public class CordMenuListener implements Listener {
         }
 
         // Checks if the player is in the action menu
-        if (ChatColor.translateAlternateColorCodes('&', e.getView().getTitle()).equals(ChatColor.RED + "Action menu") && e.getCurrentItem() != null){
+        if (ChatColor.translateAlternateColorCodes('&', e.getView().getTitle()).equals(ChatColor.DARK_RED + ConfigManager.getActionMenuName()) && e.getCurrentItem() != null){
             e.setCancelled(true);
 
             // Getting needed variables
@@ -80,7 +75,7 @@ public class CordMenuListener implements Listener {
 
     private void ActionMenu(Player player){
         // Creates the actionmenu and opens it (I plan to intergrate this menu in the GUI class)
-        Inventory inv = Bukkit.createInventory(player, 45, ChatColor.RED + "Action menu");
+        Inventory inv = Bukkit.createInventory(player, 45, ChatColor.DARK_RED + ConfigManager.getActionMenuName());
 
         ItemStack border = new ItemStack(Material.LIME_STAINED_GLASS_PANE); // Border
         for (int i : new int[]{0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,37,38,39,40,41,42,43,44}){
@@ -89,13 +84,13 @@ public class CordMenuListener implements Listener {
 
         ItemStack deleteCord = new ItemStack(Material.BARRIER);
         ItemMeta deleteCordMeta = deleteCord.getItemMeta();
-        deleteCordMeta.setDisplayName(ChatColor.RED + "Delete this coordinate");
+        deleteCordMeta.setDisplayName(ChatColor.RED + ConfigManager.getActionMenuDelete());
         deleteCord.setItemMeta(deleteCordMeta);
         inv.setItem(20, deleteCord);
 
         ItemStack printCords = new ItemStack(Material.DISPENSER);
         ItemMeta printCordsMeta = printCords.getItemMeta();
-        printCordsMeta.setDisplayName(ChatColor.GREEN + "Print the coordinates to the chat");
+        printCordsMeta.setDisplayName(ChatColor.GREEN + ConfigManager.getActionMenuPrint());
         printCords.setItemMeta(printCordsMeta);
         inv.setItem(24, printCords);
 
@@ -121,23 +116,23 @@ public class CordMenuListener implements Listener {
             cordToPaste++;
         }
 
-        YmlFileManager.deleteCordPath(player, cordCount, ChatColor.RED + "The coordinate has been deleted");
+        YmlFileManager.deleteCordPath(player, cordCount, ChatColor.RED + ConfigManager.getDeleteCoordinateMessage());
         cordCount--;
         YmlFileManager.setCordCount(player, cordCount);
         player.closeInventory();
     }
 
     private void broadcastCord(Player player, int clickedCord){
-        boolean broadcastToggle = main.getConfig().getBoolean("BroadcastToServer");
+        boolean broadcastToggle = ConfigManager.getBroadcastToggle();
         String cordName = YmlFileManager.getCordName(player, clickedCord);
         Location cordLocation = YmlFileManager.getCordLocation(player, clickedCord);
         int[] cordXYZ = YmlFileManager.getLocationXYZ(cordLocation);
 
-        if (broadcastToggle == true){
-            Bukkit.broadcastMessage(ChatColor.GREEN + cordName + "is at" + " x: "+ cordXYZ[0] + " y: " + cordXYZ[1] + " z: " + cordXYZ[2]);
+        if (broadcastToggle){
+            Bukkit.broadcastMessage(ChatColor.GREEN + cordName + ConfigManager.getPrintCoordinateMessage() + " x: "+ cordXYZ[0] + " y: " + cordXYZ[1] + " z: " + cordXYZ[2]);
             player.closeInventory();
         } else {
-            player.sendMessage(ChatColor.GREEN + cordName + "is at" + " x: "+ cordXYZ[0] + " y: " + cordXYZ[1] + " z: " + cordXYZ[2]);
+            player.sendMessage(ChatColor.GREEN + cordName + ConfigManager.getPrintCoordinateMessage() + " x: "+ cordXYZ[0] + " y: " + cordXYZ[1] + " z: " + cordXYZ[2]);
             player.closeInventory();
         }
     }

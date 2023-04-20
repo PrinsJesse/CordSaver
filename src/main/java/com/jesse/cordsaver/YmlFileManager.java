@@ -11,10 +11,18 @@ import java.io.IOException;
 public class YmlFileManager {
     // Manager to set/get all the different fields in the yml file
     private static YamlConfiguration modifyFile;
-    private final static File cordsFile = Main.getCordsFile();
+    private static File cordsFile;
 
-    public static void startFileManager(File file){
-        modifyFile = YamlConfiguration.loadConfiguration(file);
+    public YmlFileManager(Main main){
+        YmlFileManager.cordsFile = new File(main.getDataFolder(), "cords.yml");
+        if (!YmlFileManager.cordsFile.exists()) {
+            try {
+                YmlFileManager.cordsFile.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Can't load file!");
+            }
+        }
+        YmlFileManager.modifyFile = YamlConfiguration.loadConfiguration(YmlFileManager.cordsFile);
     }
 
     public static void setCordCount(Player player, int CordCount){
