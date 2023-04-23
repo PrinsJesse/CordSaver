@@ -1,5 +1,7 @@
-package com.jesse.cordsaver;
+package com.jesse.cordsaver.Commands;
 
+import com.jesse.cordsaver.GUI.GUI;
+import com.jesse.cordsaver.Utils.YmlFileManager;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

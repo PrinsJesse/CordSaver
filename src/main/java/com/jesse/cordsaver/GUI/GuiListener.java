@@ -1,5 +1,8 @@
-package com.jesse.cordsaver;
+package com.jesse.cordsaver.GUI;
 
+import com.jesse.cordsaver.Main;
+import com.jesse.cordsaver.Utils.ConfigManager;
+import com.jesse.cordsaver.Utils.YmlFileManager;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

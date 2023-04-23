@@ -1,4 +1,6 @@
-package com.jesse.cordsaver;
+package com.jesse.cordsaver.Utils;
+
+import com.jesse.cordsaver.Main;
 
 public class ConfigManager {
     private static Main main;

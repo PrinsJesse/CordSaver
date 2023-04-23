@@ -1,5 +1,6 @@
-package com.jesse.cordsaver;
+package com.jesse.cordsaver.Utils;
 
+import com.jesse.cordsaver.Main;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
