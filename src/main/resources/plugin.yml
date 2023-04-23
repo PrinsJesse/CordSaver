@@ -3,5 +3,6 @@ version: '${project.version}'
 main: com.jesse.cordsaver.Main
 api-version: 1.14
 commands:
-  save:
-  cordsmenu:
+  savecoords:
+  coordsmenu:
+  customizegui:

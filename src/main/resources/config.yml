@@ -13,6 +13,9 @@ ActionMenuName: 'Action Menu'
 ActionMenuDelete: 'Delete this coordinate'
 ActionMenuPrint: 'Send the coordinates to the chat'
 
+# The customization menu
+CustomizeBorderGuiName: 'Customize border'
+
 # Messages
 DeleteCoordinateMessage: 'The coordinate has been deleted!'
 SaveCoordinateMessage: 'The location has been saved!'

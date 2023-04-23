@@ -1,7 +1,7 @@
 package com.jesse.cordsaver;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -11,64 +11,80 @@ import java.io.IOException;
 public class YmlFileManager {
     // Manager to set/get all the different fields in the yml file
     private static YamlConfiguration modifyFile;
-    private static File cordsFile;
+    private static File coordsFile;
 
-    public YmlFileManager(Main main){
-        YmlFileManager.cordsFile = new File(main.getDataFolder(), "cords.yml");
-        if (!YmlFileManager.cordsFile.exists()) {
+    public static void startYmlFileManager(Main main){
+        YmlFileManager.coordsFile = new File(main.getDataFolder(), "cords.yml");
+        if (!YmlFileManager.coordsFile.exists()) {
             try {
-                YmlFileManager.cordsFile.createNewFile();
+                YmlFileManager.coordsFile.createNewFile();
             } catch (IOException e) {
                 System.out.println("Can't load file!");
             }
         }
-        YmlFileManager.modifyFile = YamlConfiguration.loadConfiguration(YmlFileManager.cordsFile);
+        YmlFileManager.modifyFile = YamlConfiguration.loadConfiguration(YmlFileManager.coordsFile);
     }
 
-    public static void setCordCount(Player player, int CordCount){
+    public static void setCoordCount(Player player, int CoordCount){
         String playerName = player.getName();
-        modifyFile.set(playerName + ".CordCount", CordCount);
-        saveFile(cordsFile, null, player);
+        modifyFile.set(playerName + ".CordCount", CoordCount);
+        saveFile(coordsFile, null, player);
     }
 
-    public static int getCordCount(Player player){
+    public static int getCoordCount(Player player){
         String playerName = player.getName();
         return modifyFile.getInt(playerName + ".CordCount");
     }
 
-    public static void setCordLocation(Player player, int cordNumber, Location location, String message){
+    public static void setCoordLocation(Player player, int coordNumber, Location location, String message){
         String playerName = player.getName();
-        modifyFile.set(playerName + ".cord" + cordNumber + ".Location", location);
-        saveFile(cordsFile, message, player);
+        modifyFile.set(playerName + ".cord" + coordNumber + ".Location", location);
+        saveFile(coordsFile, message, player);
     }
 
-    public static Location getCordLocation(Player player, int cordNumber){
+    public static Location getCoordLocation(Player player, int coordNumber){
         String playerName = player.getName();
-        return modifyFile.getLocation(playerName + ".cord" + cordNumber + ".Location");
+        return modifyFile.getLocation(playerName + ".cord" + coordNumber + ".Location");
     }
 
-    public static void setCordName(Player player, int cordNumber, String cordName){
+    public static void setCoordName(Player player, int coordNumber, String coordName){
         String playerName = player.getName();
-        modifyFile.set(playerName + ".cord" + cordNumber + ".name", cordName);
-        saveFile(cordsFile, null, player);
+        modifyFile.set(playerName + ".cord" + coordNumber + ".name", coordName);
+        saveFile(coordsFile, null, player);
     }
 
-    public static String getCordName(Player player, int cordNumber){
+    public static String getCoordName(Player player, int coordNumber){
         String playerName = player.getName();
-        return modifyFile.getString(playerName + ".cord" + cordNumber + ".name");
+        return modifyFile.getString(playerName + ".cord" + coordNumber + ".name");
     }
 
-    public static void deleteCordPath(Player player, int cordNumber, String message){
+    public static Material getBorderMaterial(Player player){
         String playerName = player.getName();
-        modifyFile.set(playerName + ".cord" + cordNumber, null);
-        saveFile(cordsFile, message, player);
+        String borderMaterialString = modifyFile.getString(playerName + ".borderMaterial");
+        if (borderMaterialString != null){
+            return Material.valueOf(borderMaterialString);
+        } else {
+            return Material.LIME_STAINED_GLASS_PANE;
+        }
     }
 
-    public static int[] getLocationXYZ(Location cordLocation){
+    public static void setBorderMaterial(Player player, Material material, String message){
+        String playerName = player.getName();
+        modifyFile.set(playerName + ".borderMaterial", material.toString());
+        saveFile(coordsFile, message, player);
+    }
+
+    public static void deleteCoordPath(Player player, int coordNumber, String message){
+        String playerName = player.getName();
+        modifyFile.set(playerName + ".cord" + coordNumber, null);
+        saveFile(coordsFile, message, player);
+    }
+
+    public static int[] getLocationXYZ(Location coordLocation){
         int[] locationXYZ = new int[3];
-        locationXYZ[0] = (int) cordLocation.getX();
-        locationXYZ[1] = (int) cordLocation.getY();
-        locationXYZ[2] = (int) cordLocation.getZ();
+        locationXYZ[0] = (int) coordLocation.getX();
+        locationXYZ[1] = (int) coordLocation.getY();
+        locationXYZ[2] = (int) coordLocation.getZ();
         return locationXYZ;
     }
 

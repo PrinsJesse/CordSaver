@@ -8,19 +8,19 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 
-public class CordMenuCommand implements CommandExecutor {
+public class CoordMenuCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
 
         if (commandSender instanceof Player){
             // Gets the needed variables for this command
             Player player = (Player) commandSender;
-            int cordCount = YmlFileManager.getCordCount(player);
+            int coordCount = YmlFileManager.getCoordCount(player);
             World.Environment dimension = World.Environment.NORMAL;
 
             // Creates and opens the coordinate GUI
-            GUI cordsGUI = new GUI(player, dimension, cordCount);
-            player.openInventory(cordsGUI.createGUI());
+            GUI coordsGUI = new GUI();
+            player.openInventory(coordsGUI.createCoordGUI(player, dimension, coordCount));
         }
         return false;
     }

@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class SaveCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        // /save Name_for_cords
+        // /save Name_for_coords
 
         if (commandSender instanceof Player && args.length > 0){
             // Getting the needed variables
@@ -23,13 +23,13 @@ public class SaveCommand implements CommandExecutor {
             for (String arg : args) {
                 builder.append(arg).append(" ");
             }
-            String cordName = builder.toString();
+            String coordName = builder.toString();
 
-            //save the executors cords, the name of the cords and the dimension to a yml file
-            int cordCount = YmlFileManager.getCordCount(player) + 1;
-            YmlFileManager.setCordCount(player, cordCount);
-            YmlFileManager.setCordName(player, cordCount, cordName);
-            YmlFileManager.setCordLocation(player, cordCount, playerLocation, ChatColor.GREEN + ConfigManager.getSaveCoordinateMessage());
+            //save the executors coords, the name of the coords and the dimension to a yml file
+            int coordCount = YmlFileManager.getCoordCount(player) + 1;
+            YmlFileManager.setCoordCount(player, coordCount);
+            YmlFileManager.setCoordName(player, coordCount, coordName);
+            YmlFileManager.setCoordLocation(player, coordCount, playerLocation, ChatColor.GREEN + ConfigManager.getSaveCoordinateMessage());
         }
         return false;
     }

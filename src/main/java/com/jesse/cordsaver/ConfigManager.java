@@ -2,7 +2,7 @@ package com.jesse.cordsaver;
 
 public class ConfigManager {
     private static Main main;
-    public ConfigManager(Main main){
+    public static void startConfigManager(Main main){
         ConfigManager.main = main;
         ConfigManager.main.getConfig().options().copyDefaults();
         ConfigManager.main.saveDefaultConfig();
@@ -12,7 +12,7 @@ public class ConfigManager {
         return main.getConfig().getBoolean("BroadcastToServer");
     }
 
-    public static String getCordsMenuName(){
+    public static String getCoordsMenuName(){
         return main.getConfig().getString("CordsMenuName");
     }
 
@@ -50,5 +50,9 @@ public class ConfigManager {
 
     public static String getPrintCoordinateMessage(){
         return main.getConfig().getString("PrintCoordinateMessage");
+    }
+
+    public static String getBorderCustomizationGuiName(){
+        return main.getConfig().getString("CustomizeBorderGuiName");
     }
 }

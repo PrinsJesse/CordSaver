@@ -11,16 +11,19 @@ import java.util.HashMap;
 
 public final class Main extends JavaPlugin implements Listener {
 
-    public static HashMap<ItemStack, Integer> cordDictionary = new HashMap<>();
+    public static HashMap<ItemStack, Integer> coordDictionary = new HashMap<>();
     @Override
     public void onEnable() {
-        new ConfigManager(this);
-        new YmlFileManager(this);
+        ConfigManager.startConfigManager(this);
+        YmlFileManager.startYmlFileManager(this);
 
-        getCommand("save").setExecutor(new SaveCommand());
-        getCommand("save").setTabCompleter(new saveTabCompleter());
-        getCommand("cordsmenu").setExecutor(new CordMenuCommand());
-        Bukkit.getPluginManager().registerEvents(new CordMenuListener(), this);
+
+        getCommand("savecoords").setExecutor(new SaveCommand());
+        getCommand("savecoords").setTabCompleter(new saveTabCompleter());
+        getCommand("customizegui").setExecutor(new CustomizeCommand());
+        getCommand("customizegui").setTabCompleter(new CustomizeTabCompleter());
+        getCommand("coordsmenu").setExecutor(new CoordMenuCommand());
+        Bukkit.getPluginManager().registerEvents(new GuiListener(), this);
         Bukkit.getPluginManager().registerEvents(this, this);
     }
 
