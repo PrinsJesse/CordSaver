@@ -2,6 +2,7 @@ package com.jesse.cordsaver.GUI;
 
 import com.jesse.cordsaver.Main;
 import com.jesse.cordsaver.Utils.ConfigManager;
+import com.jesse.cordsaver.Utils.GuiManager;
 import com.jesse.cordsaver.Utils.YmlFileManager;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -28,30 +29,26 @@ public class GuiListener implements Listener {
             World.Environment dimension;
             Player player = (Player) e.getWhoClicked();
             int coordCount = YmlFileManager.getCoordCount(player);
-            GUI coordsGUI;
+            CoordsGUI coordsGUI = GuiManager.coordsGUI;
 
             // Checking if the player clicked on a coordinate and if yes it opens the Action menu
             clickedCoord = e.getCurrentItem();
             if (Main.coordDictionary.containsKey(clickedCoord)){
-                GUI actionMenu = new GUI();
-                player.openInventory(actionMenu.createActionGUI(player));
+                player.openInventory(GuiManager.actionGUI.createActionGUI(player));
             }
 
             // Checking if the player clicked on one of the dimension tab and creating the corresponding GUI using the GUI class
             switch(clickedSlot){
                 case 3:
                     dimension = World.Environment.NORMAL;
-                    coordsGUI = new GUI();
                     player.openInventory(coordsGUI.createCoordGUI(player, dimension, coordCount));
                     break;
                 case 4:
                     dimension = World.Environment.NETHER;
-                    coordsGUI = new GUI();
                     player.openInventory(coordsGUI.createCoordGUI(player, dimension, coordCount));
                     break;
                 case 5:
                     dimension = World.Environment.THE_END;
-                    coordsGUI = new GUI();
                     player.openInventory(coordsGUI.createCoordGUI(player, dimension, coordCount));
                     break;
             }

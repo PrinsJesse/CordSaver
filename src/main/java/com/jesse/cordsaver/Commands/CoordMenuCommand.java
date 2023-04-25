@@ -1,6 +1,6 @@
 package com.jesse.cordsaver.Commands;
 
-import com.jesse.cordsaver.GUI.GUI;
+import com.jesse.cordsaver.Utils.GuiManager;
 import com.jesse.cordsaver.Utils.YmlFileManager;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -21,8 +21,7 @@ public class CoordMenuCommand implements CommandExecutor {
             World.Environment dimension = World.Environment.NORMAL;
 
             // Creates and opens the coordinate GUI
-            GUI coordsGUI = new GUI();
-            player.openInventory(coordsGUI.createCoordGUI(player, dimension, coordCount));
+            player.openInventory(GuiManager.coordsGUI.createCoordGUI(player, dimension, coordCount));
         }
         return false;
     }

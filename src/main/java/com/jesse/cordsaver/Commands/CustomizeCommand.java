@@ -1,6 +1,6 @@
 package com.jesse.cordsaver.Commands;
 
-import com.jesse.cordsaver.GUI.GUI;
+import com.jesse.cordsaver.Utils.GuiManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,14 +13,11 @@ public class CustomizeCommand implements CommandExecutor {
 
         if (commandSender instanceof Player){
             Player player = (Player) commandSender;
-            GUI customizationGUI = new GUI();
 
-            switch (args[0]){
-                case "border":
-                    player.openInventory(customizationGUI.createBorderCustomizationGUI(player));
-                    break;
-                default:
-                    player.sendMessage("Usage: /customizegui <argument>");
+            if (args[0].equals("border")) {
+                player.openInventory(GuiManager.customizationGUI.createBorderCustomizationGUI(player));
+            } else {
+                player.sendMessage("Usage: /customizegui <argument>");
             }
         }
 
