@@ -1,6 +1,7 @@
 package com.jesse.cordsaver.Utils;
 
 import com.jesse.cordsaver.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -8,6 +9,10 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class YmlFileManager {
     // Manager to set/get all the different fields in the yml file
@@ -26,14 +31,18 @@ public class YmlFileManager {
         YmlFileManager.modifyFile = YamlConfiguration.loadConfiguration(YmlFileManager.coordsFile);
     }
 
+    public static List<String> getCoordPlayerList(){
+        Set<String> PlayerSet = modifyFile.getKeys(false);
+        return new ArrayList<>(PlayerSet);
+    }
+
     public static void setCoordCount(Player player, int CoordCount){
         String playerName = player.getName();
         modifyFile.set(playerName + ".CordCount", CoordCount);
         saveFile(coordsFile, null, player);
     }
 
-    public static int getCoordCount(Player player){
-        String playerName = player.getName();
+    public static int getCoordCount(String playerName){
         return modifyFile.getInt(playerName + ".CordCount");
     }
 
@@ -43,8 +52,7 @@ public class YmlFileManager {
         saveFile(coordsFile, message, player);
     }
 
-    public static Location getCoordLocation(Player player, int coordNumber){
-        String playerName = player.getName();
+    public static Location getCoordLocation(String playerName, int coordNumber){
         return modifyFile.getLocation(playerName + ".cord" + coordNumber + ".Location");
     }
 
@@ -54,8 +62,7 @@ public class YmlFileManager {
         saveFile(coordsFile, null, player);
     }
 
-    public static String getCoordName(Player player, int coordNumber){
-        String playerName = player.getName();
+    public static String getCoordName(String playerName, int coordNumber){
         return modifyFile.getString(playerName + ".cord" + coordNumber + ".name");
     }
 

@@ -28,7 +28,7 @@ public class GuiListener implements Listener {
             int clickedSlot = e.getRawSlot();
             World.Environment dimension;
             Player player = (Player) e.getWhoClicked();
-            int coordCount = YmlFileManager.getCoordCount(player);
+            int coordCount = YmlFileManager.getCoordCount(player.getName());
             CoordsGUI coordsGUI = GuiManager.coordsGUI;
 
             // Checking if the player clicked on a coordinate and if yes it opens the Action menu
@@ -53,6 +53,36 @@ public class GuiListener implements Listener {
                     break;
             }
         }
+
+        if (ChatColor.translateAlternateColorCodes('&', e.getView().getTitle()).equals(ChatColor.LIGHT_PURPLE + ConfigManager.getAdminCoordsMenuName() + GuiManager.admin_target.get(e.getWhoClicked().getName())) && e.getCurrentItem() != null){
+            e.setCancelled(true);
+
+            // Getting the needed variables
+            int clickedSlot = e.getRawSlot();
+            World.Environment dimension;
+            Player admin = (Player) e.getWhoClicked();
+            String target = GuiManager.admin_target.get(admin.getName());
+            int coordCount = YmlFileManager.getCoordCount(target);
+            AdminCoordsGUI adminCoordsGUI = GuiManager.adminCoordsGUI;
+
+            // Checking if the player clicked on one of the dimension tab and creating the corresponding GUI using the GUI class
+            switch(clickedSlot){
+                case 3:
+                    dimension = World.Environment.NORMAL;
+                    admin.openInventory(adminCoordsGUI.createAdminCoordGUI(admin, target, dimension, coordCount));
+                    break;
+                case 4:
+                    dimension = World.Environment.NETHER;
+                    admin.openInventory(adminCoordsGUI.createAdminCoordGUI(admin, target, dimension, coordCount));
+                    break;
+                case 5:
+                    dimension = World.Environment.THE_END;
+                    admin.openInventory(adminCoordsGUI.createAdminCoordGUI(admin, target, dimension, coordCount));
+                    break;
+            }
+        }
+
+
 
         // Checks if the player is in the action menu
         if (ChatColor.translateAlternateColorCodes('&', e.getView().getTitle()).equals(ChatColor.DARK_RED + ConfigManager.getActionMenuName()) && e.getCurrentItem() != null){
@@ -89,13 +119,13 @@ public class GuiListener implements Listener {
     private void deleteCoord(Player player, int clickedCoord){
         // This method deletes a coordinate by copying all the coordinates below the chosen coordinates and putting one coordinate higher
         // After coping/pasting it deletes the last coordinate entirly from the yml file
-        int coordCount = YmlFileManager.getCoordCount(player);
+        int coordCount = YmlFileManager.getCoordCount(player.getName());
         int coordToCopy = clickedCoord + 1;
         int coordToPaste = clickedCoord;
         for (int i = 0; i < (coordCount - clickedCoord); i++){
             // Get the information to copy to the coordinate above it
-            String tmpName = YmlFileManager.getCoordName(player, coordToCopy);
-            Location tmpLocation = YmlFileManager.getCoordLocation(player, coordToCopy);
+            String tmpName = YmlFileManager.getCoordName(player.getName(), coordToCopy);
+            Location tmpLocation = YmlFileManager.getCoordLocation(player.getName(), coordToCopy);
             coordToCopy++;
 
             // Puts the copied information one coordinate higher
@@ -112,8 +142,8 @@ public class GuiListener implements Listener {
 
     private void broadcastCoord(Player player, int clickedCoord){
         boolean broadcastToggle = ConfigManager.getBroadcastToggle();
-        String coordName = YmlFileManager.getCoordName(player, clickedCoord);
-        Location coordLocation = YmlFileManager.getCoordLocation(player, clickedCoord);
+        String coordName = YmlFileManager.getCoordName(player.getName(), clickedCoord);
+        Location coordLocation = YmlFileManager.getCoordLocation(player.getName(), clickedCoord);
         int[] coordXYZ = YmlFileManager.getLocationXYZ(coordLocation);
 
         if (broadcastToggle){

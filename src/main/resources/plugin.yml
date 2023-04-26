@@ -4,5 +4,10 @@ main: com.jesse.cordsaver.Main
 api-version: 1.14
 commands:
   savecoords:
+    usage: 'Usage: /savecoords <coordinate name>'
   coordsmenu:
+    usage: 'Usage: /coordsmenu'
   customizegui:
+    usage: 'Usage: /coordsmenu <argument>'
+  admingui:
+    usage: 'Usage: /admingui <player name>'

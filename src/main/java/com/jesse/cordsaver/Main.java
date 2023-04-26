@@ -28,6 +28,8 @@ public final class Main extends JavaPlugin implements Listener {
         getCommand("customizegui").setExecutor(new CustomizeCommand());
         getCommand("customizegui").setTabCompleter(new CustomizeTabCompleter());
         getCommand("coordsmenu").setExecutor(new CoordMenuCommand());
+        getCommand("admingui").setExecutor(new AdminCommand());
+        getCommand("admingui").setTabCompleter(new AdminCommandTabCompleter());
         Bukkit.getPluginManager().registerEvents(new GuiListener(), this);
         Bukkit.getPluginManager().registerEvents(this, this);
     }

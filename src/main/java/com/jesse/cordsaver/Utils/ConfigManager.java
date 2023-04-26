@@ -57,4 +57,8 @@ public class ConfigManager {
     public static String getBorderCustomizationGuiName(){
         return main.getConfig().getString("CustomizeBorderGuiName");
     }
+
+    public static String getAdminCoordsMenuName(){
+        return main.getConfig().getString("AdminCoordsMenuName");
+    }
 }

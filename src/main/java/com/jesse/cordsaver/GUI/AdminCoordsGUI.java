@@ -10,13 +10,12 @@ import org.bukkit.inventory.ItemStack;
 
 import static com.jesse.cordsaver.Utils.GuiManager.createGuiItem;
 
-public class CoordsGUI {
-
-    public Inventory createCoordGUI(Player player, World.Environment clickedDimension, int coordCount){
-        Inventory coordsGUI = Bukkit.createInventory(player, 54, ChatColor.RED + ConfigManager.getCoordsMenuName());
+public class AdminCoordsGUI {
+    public Inventory createAdminCoordGUI(Player admin, String target, World.Environment clickedDimension, int coordCount){
+        Inventory coordsGUI = Bukkit.createInventory(admin, 54, ChatColor.LIGHT_PURPLE + ConfigManager.getAdminCoordsMenuName() + target);
 
         // Putting the border in the GUI
-        ItemStack border = createGuiItem(YmlFileManager.getBorderMaterial(player), ChatColor.GRAY + "", null);
+        ItemStack border = createGuiItem(YmlFileManager.getBorderMaterial(admin), ChatColor.GRAY + "", null);
         for (int i : new int[]{0,1,2,6,7,8,9,17,18,26,27,35,36,44,45,46,47,48,49,50,51,52,53}){
             coordsGUI.setItem(i, border);
         }
@@ -29,8 +28,8 @@ public class CoordsGUI {
         for (int coordNumber = 1, slotNumber = 0; coordNumber <= coordCount; coordNumber++){
             // Getting all the needed variables
             ItemStack coordDisplayItem = null;
-            String coordName = YmlFileManager.getCoordName(player.getName(), coordNumber);
-            Location coordLocation = YmlFileManager.getCoordLocation(player.getName(), coordNumber);
+            String coordName = YmlFileManager.getCoordName(target, coordNumber);
+            Location coordLocation = YmlFileManager.getCoordLocation(target, coordNumber);
             int[] coordXYZ = YmlFileManager.getLocationXYZ(coordLocation);
             String coordLore = ChatColor.AQUA + "x: " + coordXYZ[0] + " y: " + coordXYZ[1] + " z: " + coordXYZ[2];
             World.Environment coordDimension = coordLocation.getWorld().getEnvironment();

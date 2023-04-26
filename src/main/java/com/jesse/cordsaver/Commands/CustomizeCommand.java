@@ -13,14 +13,17 @@ public class CustomizeCommand implements CommandExecutor {
 
         if (commandSender instanceof Player){
             Player player = (Player) commandSender;
-
-            if (args[0].equals("border")) {
-                player.openInventory(GuiManager.customizationGUI.createBorderCustomizationGUI(player));
+            if (args.length == 1){
+                if (args[0].equals("border")) {
+                    player.openInventory(GuiManager.customizationGUI.createBorderCustomizationGUI(player));
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
-                player.sendMessage("Usage: /customizegui <argument>");
+                return false;
             }
         }
-
         return false;
     }
 }

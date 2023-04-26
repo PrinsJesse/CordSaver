@@ -28,10 +28,11 @@ public class SaveCommand implements CommandExecutor {
             String coordName = builder.toString();
 
             //save the executors coords, the name of the coords and the dimension to a yml file
-            int coordCount = YmlFileManager.getCoordCount(player) + 1;
+            int coordCount = YmlFileManager.getCoordCount(player.getName()) + 1;
             YmlFileManager.setCoordCount(player, coordCount);
             YmlFileManager.setCoordName(player, coordCount, coordName);
             YmlFileManager.setCoordLocation(player, coordCount, playerLocation, ChatColor.GREEN + ConfigManager.getSaveCoordinateMessage());
+            return true;
         }
         return false;
     }

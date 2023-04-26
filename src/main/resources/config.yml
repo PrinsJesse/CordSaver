@@ -20,3 +20,6 @@ CustomizeBorderGuiName: 'Customize border'
 DeleteCoordinateMessage: 'The coordinate has been deleted!'
 SaveCoordinateMessage: 'The location has been saved!'
 PrintCoordinateMessage: 'is at' # These are the words between the name and the xyz coordinates when sending the coordinates to the chat
+
+# Admin menu
+AdminCoordsMenuName: 'Coordinates from '

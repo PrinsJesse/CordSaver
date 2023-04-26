@@ -17,11 +17,12 @@ public class CoordMenuCommand implements CommandExecutor {
         if (commandSender instanceof Player){
             // Gets the needed variables for this command
             Player player = (Player) commandSender;
-            int coordCount = YmlFileManager.getCoordCount(player);
+            int coordCount = YmlFileManager.getCoordCount(player.getName());
             World.Environment dimension = World.Environment.NORMAL;
 
             // Creates and opens the coordinate GUI
             player.openInventory(GuiManager.coordsGUI.createCoordGUI(player, dimension, coordCount));
+            return true;
         }
         return false;
     }
